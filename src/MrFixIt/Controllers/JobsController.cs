@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using MrFixIt.Models;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace MrFixIt.Controllers
 {
     public class JobsController : Controller
@@ -43,6 +42,26 @@ namespace MrFixIt.Controllers
             db.Entry(job).State = EntityState.Modified;
             db.SaveChanges();
             return Json(job);
+        }
+
+        [HttpPost]
+        public IActionResult ChangeStatus(int jobId, string changeValue)
+        {
+            Job job = db.Jobs.FirstOrDefault(j => j.JobId == jobId);
+
+            switch (changeValue)
+            {
+                case "pending":
+                    job.MarkPending();
+                    break;
+                case "completed":
+                    job.MarkCompleted();
+                    break;
+                default:
+                    break;
+            }
+
+            return View("JobPanel.cshtml", job);
         }
     }
 }

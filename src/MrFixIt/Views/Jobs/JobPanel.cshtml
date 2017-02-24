@@ -1,0 +1,36 @@
+﻿@model MrFixIt.Models.Job
+
+<div class="panel @Model.GetPanelClass()" id="job-panel-@Model.JobId">
+    <div class="panel-heading">
+        <h3 class="panel-title">@Model.Title</h3>
+    </div>
+    <div class="panel-body">
+        @Model.Description
+        <hr />
+        <div class="completion" id="@Model.JobId">
+            if(@Model.Completed)
+            {
+            Completed
+            }
+            else
+            {
+            <form id="change-status">
+                <input type="hidden" name="jobId" value="@Model.JobId" />
+                if(@Model.Pending)
+                {
+                <p>Pending</p>
+                <input type="hidden" name="changeValue" value="complete" />
+                <input type="submit" class="submit-as-link" value="Mark as complete" />
+                }
+                else
+                {
+                <p>Inactive</p>
+                <input type="hidden" name="changeValue" value="pending" />
+                <input type="submit" class="submit-as-link" value="Mark as pending" />
+
+                }
+            </form>
+            }
+        </div>
+    </div>
+</div>

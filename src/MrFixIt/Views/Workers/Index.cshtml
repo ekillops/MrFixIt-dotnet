@@ -3,16 +3,73 @@
 
 @model MrFixIt.Models.Worker
 
+<!-- Script for changing job completion status -->
+<script>
+    $(function () {
+        $("#change-status").submit(function (event) {
+  
+            var jobId = this.jobId.value;
+            event.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '/Jobs/ChangeStatus/',
+                data: $(this).serialize(),
+                datatype: 'html',
+                success: function (result) {
+                    $("job-panel-" + this.jobId.value).html(result);
+                }
+            });
+        });
+
+    });
+</script>
+
+<!-- Html -->
 
 <h1>@Model.FirstName @Model.LastName</h1>
 <hr />
 
 <h3>Your Current Jobs</h3>
-@foreach (var Job in Model.Jobs)
+@foreach (var job in Model.Jobs)
 {
-    <p>@Job.Title</p>
+    <div id="job-panel-@job.JobId">
+        <div class="panel @job.GetPanelClass()">
+            <div class="panel-heading">
+                <h3 class="panel-title">@job.Title</h3>
+            </div>
+            <div class="panel-body">
+                @job.Description
+                <hr />
+                <div class="completion">
+                    @if (job.Completed)
+                    {
+                        <span>Completed</span>
+                    }
+                    else
+                    {
+                    <form id="change-status">
+                        <input type="hidden" name="jobId" value="@job.JobId" />
+                        @if(@job.Pending)
+                        {
+                            <span>Pending</span>
+                            <input type="hidden" name="changeValue" value="complete" />
+                            <input type="submit" class="submit-as-link" value="Mark as complete" />
+                        }
+                        else
+                        {
+                            <span>Inactive</span>
+                            <input type="hidden" name="changeValue" value="pending" />
+                            <input type="submit" class="submit-as-link" value="Mark as pending" />
 
+                        }
+                    </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 }
+
 @if (Model.Avaliable)
 {
     <p>Please <a asp-controller="Jobs" asp-action="Index">select a job</a></p>

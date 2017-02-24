@@ -10,7 +10,7 @@
             event.preventDefault();
             console.log($(this).serialize());
             $.ajax({
-                url: "Jobs/Claim/",
+                url: 'Jobs/Claim/',
                 type: 'POST',
                 data: $(this).serialize(),
                 datatype: 'json',
@@ -43,7 +43,7 @@
                 {
                     <form class="job-claim">
                         <input type="hidden" name="jobId" value="@job.JobId" />
-                        <input type="submit" class="claim-link" value="Claim Job" />
+                        <input type="submit" class="submit-as-link" value="Claim Job" />
                     </form>
 
                 }
