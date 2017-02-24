@@ -24,7 +24,8 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a asp-controller="About" asp-action="Index">About</a></li>
-                    <li><a asp-controller="Jobs" asp-action="Index">Hire Us</a></li>
+                    <li><a asp-controller="Jobs" asp-action="Index">Jobs</a></li>
+                    <li><a asp-controller="Jobs" asp-action="Create">Hire Us</a></li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li><a asp-controller="Workers" asp-action="Index">Worker Dashboard</a></li>

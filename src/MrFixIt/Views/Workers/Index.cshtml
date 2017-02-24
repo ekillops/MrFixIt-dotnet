@@ -64,6 +64,10 @@
                     </form>
                     }
                 </div>
+                <form asp-controller="Jobs" asp-action="Delete" method="post">
+                    <input type="hidden" name="id" value="@job.JobId" />
+                    <input type="submit" class="submit-as-link" value="Delete" />
+                </form>
             </div>
         </div>
     </div>
