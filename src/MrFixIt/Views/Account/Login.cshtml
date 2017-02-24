@@ -9,11 +9,13 @@
 <hr />
 
 <form asp-controller="Account" asp-action="Login" method="post">
-    <label asp-for="Email"></label>
-    <input asp-for="Email" />
-
-    <label asp-for="Password"></label>
-    <input asp-for="Password" />
-
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+    </div>
     <input type="submit" value="Log in" class="btn btn-default" />
 </form>

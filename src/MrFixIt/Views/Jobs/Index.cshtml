@@ -3,11 +3,8 @@
 
 @model List<MrFixIt.Models.Job>
 
-<div class="text-center">
-    <h3>Our Current Jobs</h3>
-    <a asp-controller="Jobs" asp-action="Create">Add a new job</a>
-</div>
-
+<h1>Our Current Jobs</h1>
+<hr />
 
 @foreach (var job in Model)
 {
@@ -26,3 +23,4 @@
 }
 
 <hr />a
+<a asp-controller="Jobs" asp-action="Create">Add a new job</a>

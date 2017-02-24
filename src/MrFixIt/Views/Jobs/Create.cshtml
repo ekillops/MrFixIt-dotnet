@@ -3,13 +3,18 @@
 
 @model MrFixIt.Models.Job
 
-<h2>Create new Job</h2>
+<h1>Create new Job</h1>
 <hr />
+
 <form asp-controller="Jobs" asp-action="Create">
-    <label asp-for="Title"></label>
-    <input asp-for="Title" />
-    <label asp-for="Description"></label>
-    <input asp-for="Description" />
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input asp-for="Description" />
+    </div>
     <input type="submit" value="Add new Job" />
 </form>
 

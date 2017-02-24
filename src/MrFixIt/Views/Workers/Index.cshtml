@@ -3,20 +3,21 @@
 
 @model MrFixIt.Models.Worker
 
-<div class="text-center">
-    <h4>Hello Worker @Model.FirstName @Model.LastName. You are Logged In</h4>
-    <h3>Your Current Jobs:</h3>
-    @foreach (var Job in Model.Jobs)
-    {
-        <p>@Job.Title</p>
 
-    }
-    @if (Model.Avaliable)
-    {
-        <p>Please <a asp-controller="Jobs" asp-action="Index">select a job</a></p>
-    }
-    else
-    {
-        <p>You are already assigned to a job.</p>
-    }
-</div>
+<h1>Hello Worker @Model.FirstName @Model.LastName. <small>You are Logged In</small></h1>
+<hr />
+
+<h3>Your Current Jobs:</h3>
+@foreach (var Job in Model.Jobs)
+{
+    <p>@Job.Title</p>
+
+}
+@if (Model.Avaliable)
+{
+    <p>Please <a asp-controller="Jobs" asp-action="Index">select a job</a></p>
+}
+else
+{
+    <p>You are already assigned to a job.</p>
+}

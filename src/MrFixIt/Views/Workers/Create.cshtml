@@ -4,15 +4,19 @@
 @using System.Security.Claims
 @model MrFixIt.Models.Worker
 
-<h2>Create</h2>
+<h1>Create</h1>
 <hr />
 
 <h4>You do not have a complete worker profile. Please create your worker profile</h4>
 <form asp-controller="Worker" asp-action="Create">
-    <label asp-for="FirstName"></label>
-    <input asp-for="FirstName" />
-    <label asp-for="LastName"></label>
-    <input asp-for="LastName" />
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" />
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" />http://localhost:62483/
+    </div>
     <input type="submit" value="Register" />
 </form>
 
