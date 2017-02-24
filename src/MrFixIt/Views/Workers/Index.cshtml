@@ -6,17 +6,16 @@
 <!-- Script for changing job completion status -->
 <script>
     $(function () {
-        $("#change-status").submit(function (event) {
-  
-            var jobId = this.jobId.value;
+        $(".change-status").submit(function (event) {
             event.preventDefault();
+            var jobId = $("> input[name=jobId]", this).val();
             $.ajax({
                 type: 'POST',
                 url: '/Jobs/ChangeStatus/',
                 data: $(this).serialize(),
                 datatype: 'html',
                 success: function (result) {
-                    $("job-panel-" + this.jobId.value).html(result);
+                    $("#job-panel-" + jobId).html(result);
                 }
             });
         });
@@ -29,7 +28,7 @@
 <h1>@Model.FirstName @Model.LastName</h1>
 <hr />
 
-<h3>Your Current Jobs</h3>
+<h3>Your Jobs</h3>
 @foreach (var job in Model.Jobs)
 {
     <div id="job-panel-@job.JobId">
@@ -47,7 +46,7 @@
                     }
                     else
                     {
-                    <form id="change-status">
+                    <form class="change-status">
                         <input type="hidden" name="jobId" value="@job.JobId" />
                         @if(@job.Pending)
                         {

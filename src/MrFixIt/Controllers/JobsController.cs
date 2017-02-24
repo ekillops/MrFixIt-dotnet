@@ -37,7 +37,7 @@ namespace MrFixIt.Controllers
         [ActionName("Claim")]
         public IActionResult ClaimJob(int jobId)
         {
-            Job job = db.Jobs.FirstOrDefault(j => j.JobId == jobId);
+            Job job = db.Jobs.Include(j => j.Worker).FirstOrDefault(j => j.JobId == jobId);
             job.Worker = db.Workers.FirstOrDefault(i => i.UserName == User.Identity.Name);
             db.Entry(job).State = EntityState.Modified;
             db.SaveChanges();
@@ -54,14 +54,17 @@ namespace MrFixIt.Controllers
                 case "pending":
                     job.MarkPending();
                     break;
-                case "completed":
+                case "complete":
                     job.MarkCompleted();
                     break;
                 default:
                     break;
             }
 
-            return View("JobPanel.cshtml", job);
+            db.Entry(job).State = EntityState.Modified;
+            db.SaveChangesAsync();
+
+            return View(job);
         }
     }
 }
