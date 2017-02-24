@@ -6,12 +6,12 @@
 <h1>Would you like to do this job?</h1>
 <hr />
 
+<h4>@Model.Title</h4>
+<p>@Model.Description</p>
 <form asp-controller="Jobs" asp-action="Claim">
     <input type="hidden" asp-for="JobId" />
     <input type="hidden" asp-for="Title" />
     <input type="hidden" asp-for="Description" />
-    <h4>@Model.Title</h4>
-    <input type="submit" value="Claim This Job" />
+    <input type="submit" value="Claim Job" class="btn btn-default"/>
 </form>
-
 <a asp-controller="Jobs" asp-action="Index">Back to list</a>

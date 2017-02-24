@@ -4,6 +4,5 @@ namespace MrFixIt.Models
 {
     public class ApplicationUser : IdentityUser
     {
-
     }
 }

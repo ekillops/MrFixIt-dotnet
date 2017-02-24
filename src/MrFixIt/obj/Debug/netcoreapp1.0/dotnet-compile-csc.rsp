@@ -205,8 +205,6 @@
 -r:"C:\Users\epicodus\.nuget\packages\System.Xml.XDocument\4.3.0\ref\netstandard1.3\System.Xml.XDocument.dll"
 -r:"C:\Users\epicodus\.nuget\packages\System.Xml.XmlSerializer\4.0.11\ref\netstandard1.3\System.Xml.XmlSerializer.dll"
 -resource:"C:\Users\epicodus\Desktop\MrFixIt-dotnet\src\MrFixIt\obj\Debug\netcoreapp1.0\MrFixItdotnet-compile.deps.json",MrFixIt.deps.json
-"C:\Users\epicodus\Desktop\MrFixIt-dotnet\src\MrFixIt\DatatypeAttribute.cs"
-"C:\Users\epicodus\Desktop\MrFixIt-dotnet\src\MrFixIt\EmailAttribute.cs"
 "C:\Users\epicodus\Desktop\MrFixIt-dotnet\src\MrFixIt\Program.cs"
 "C:\Users\epicodus\Desktop\MrFixIt-dotnet\src\MrFixIt\Startup.cs"
 "C:\Users\epicodus\Desktop\MrFixIt-dotnet\src\MrFixIt\Controllers\AboutController.cs"

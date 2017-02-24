@@ -3,24 +3,57 @@
 
 @model List<MrFixIt.Models.Job>
 
+<!-- Scipt for Claim Job-->
+<script>
+    $(function () {
+        $(".job-claim").submit(function (event) {
+            event.preventDefault();
+            console.log($(this).serialize());
+            $.ajax({
+                url: "Jobs/Claim/",
+                type: 'POST',
+                data: $(this).serialize(),
+                datatype: 'json',
+                success: function (result) {
+                    var htmlResult =
+                        "This job is claimed by " + result.Worker.firstName + " " + result.Worker.lastName;
+                    $(".claim#" + result.jobId).html(htmlResult);
+                }
+            });
+        })
+    });
+</script>
+
+
+<!-- Job List-->
 <h1>Our Current Jobs</h1>
 <hr />
 
 @foreach (var job in Model)
 {
-    <h4>@job.Title</h4>
-    <p>@job.Description</p>
-    @if (job.Worker == null)
-    {
-        <p><small></small>This job is unclaimed. <a asp-controller="Jobs" asp-action="Claim" asp-route-id="@job.JobId">Claim</a></p>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">@job.Title</h3>
+        </div>
+        <div class="panel-body">
+            @job.Description
+            <hr />
+            <div class="claim" id="@job.JobId">
+                @if (job.Worker == null)
+                {
+                    <form class="job-claim">
+                        <input type="hidden" name="jobId" value="@job.JobId" />
+                        <input type="submit" class="claim-link" value="Claim Job" />
+                    </form>
 
-    }
-    else
-    {
-        <p>This job is claimed by @job.Worker.FirstName @job.Worker.LastName</p>
-
-    }
+                }
+                else
+                {
+                    <span>This job is claimed by @job.Worker.FirstName @job.Worker.LastName</span>
+                }
+            </div>
+        </div>
+    </div>
 }
 
-<hr />a
 <a asp-controller="Jobs" asp-action="Create">Add a new job</a>

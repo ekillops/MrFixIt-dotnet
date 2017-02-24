@@ -4,10 +4,10 @@
 @model MrFixIt.Models.Worker
 
 
-<h1>Hello Worker @Model.FirstName @Model.LastName. <small>You are Logged In</small></h1>
+<h1>@Model.FirstName @Model.LastName</h1>
 <hr />
 
-<h3>Your Current Jobs:</h3>
+<h3>Your Current Jobs</h3>
 @foreach (var Job in Model.Jobs)
 {
     <p>@Job.Title</p>

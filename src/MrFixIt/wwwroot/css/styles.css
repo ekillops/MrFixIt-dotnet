@@ -1,3 +1,15 @@
 ﻿body{
     padding-top: 60px;
 }
+
+.claim-link{
+    background: none;
+    border: none;
+    color: #337ab7;
+    cursor: pointer;
+}
+
+.claim-link:hover{
+    color: #23527c;
+    text-decoration: underline;
+}
