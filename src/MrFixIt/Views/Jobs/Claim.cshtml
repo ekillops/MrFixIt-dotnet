@@ -1,19 +1,16 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
 }
+
 @model MrFixIt.Models.Job
 
 <h2>Would you like to do this job?</h2>
 <hr />
-@using (Html.BeginForm())
-{
-    @Html.HiddenFor(model => model.JobId)
-    @Html.HiddenFor(model => model.Title)
-    @Html.HiddenFor(model => model.Description)
-
+<form asp-controller="Jobs" asp-action="Claim">
+    <input type="hidden" asp-for="JobId" />
+    <input type="hidden" asp-for="Title" />
+    <input type="hidden" asp-for="Description" />
     <h4>@Model.Title</h4>
     <input type="submit" value="Claim This Job" />
-}
-<p>@Html.ActionLink("Back to list", "Index")</p>
+</form>
+
+<a asp-controller="Jobs" asp-action="Index">Back to list</a>

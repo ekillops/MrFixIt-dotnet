@@ -1,13 +1,13 @@
 ﻿<!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="~/js/scripts.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/styles.css" />
-     <title>@ViewBag.Title</title>
+    <title>@ViewBag.Title</title>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -23,39 +23,21 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>
-                        @Html.ActionLink("About", "Index", "About")
-                    </li>
-                    <li>
-                        @Html.ActionLink("Hire Us", "Index", "Jobs")
-                    </li>
+                    <li><a asp-controller="About" asp-action="Index">About</a></li>
+                    <li><a asp-controller="Jobs" asp-action="Index">Hire Us</a></li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>
-                            @Html.ActionLink("Worker Dashboard", "Index", "Workers")
-                        </li>
+                        <li><a asp-controller="Workers" asp-action="Index">Worker Dashboard</a></li>
+                        <li><a asp-controller="Account" asp-action="LogOff">Log Out</a></li>
                     }
-
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li>
-                            @Html.ActionLink("Log Out", "LogOff", "Account")
-                        </li>
-                    }
-
                 </ul>
             </div>
         </div>
     </nav>
 
     @*Current User Dashboard*@
-
-
-
     <div class="container">
         @RenderBody()
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </html>

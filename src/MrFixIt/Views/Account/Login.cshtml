@@ -1,20 +1,19 @@
 ﻿@{
-    ViewData["Title"] = "Log In";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @using MrFixIt.ViewModels
 
 @model LoginViewModel
 
 <h2>Log in with your account</h2>
 <hr />
-@using (Html.BeginForm())
-{
-    @Html.LabelFor(m => m.Email)
-    @Html.TextBoxFor(m => m.Email)
 
-    @Html.LabelFor(m => m.Password)
-    @Html.PasswordFor(m => m.Password)
+<form asp-controller="Account" asp-action="Login" method="post">
+    <label asp-for="Email"></label>
+    <input asp-for="Email" />
+
+    <label asp-for="Password"></label>
+    <input asp-for="Password" />
 
     <input type="submit" value="Log in" class="btn btn-default" />
-}
+</form>
