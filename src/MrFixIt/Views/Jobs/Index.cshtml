@@ -18,9 +18,11 @@
                     var htmlResult =
                         "This job is claimed by " + result.worker.firstName + " " + result.worker.lastName;
                     $(".claim#" + result.jobId).html(htmlResult);
-                }
+                },
+            }).fail(function(){
+                alert("You already have an active job!");    
             });
-        })
+        });
     });
 </script>
 
@@ -43,17 +45,20 @@
                 @job.Description
                 <hr />
                 <div class="claim" id="@job.JobId">
-                    @if (job.Worker == null)
+                    @if(User.Identity.IsAuthenticated)
                     {
-                        <form class="job-claim">
-                            <input type="hidden" name="jobId" value="@job.JobId" />
-                            <input type="submit" class="submit-as-link" value="Claim Job" />
-                        </form>
+                        @if (job.Worker == null)
+                        {
+                            <form class="job-claim">
+                                <input type="hidden" name="jobId" value="@job.JobId" />
+                                <input type="submit" class="submit-as-link" value="Claim Job" />
+                            </form>
 
-                    }
-                    else
-                    {
-                        <span>This job is claimed by @job.Worker.FirstName @job.Worker.LastName</span>
+                        }
+                        else
+                        {
+                            <span>This job is claimed by @job.Worker.FirstName @job.Worker.LastName</span>
+                        }
                     }
                 </div>
             </div>

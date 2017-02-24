@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace MrFixIt.Models
@@ -13,12 +14,6 @@ namespace MrFixIt.Models
         public bool Pending { get; private set; }
         public virtual Worker Worker { get; set; }
 
-        public Worker FindWorker(string UserName)
-        {
-            Worker thisWorker = new MrFixItContext().Workers.FirstOrDefault(i => i.UserName == UserName);
-            return thisWorker;
-        }
-
         public void MarkCompleted()
         {
             Completed = true;
@@ -29,6 +24,11 @@ namespace MrFixIt.Models
         {
             Completed = false;
             Pending = true;
+        }
+        public void MarkInactive()
+        {
+            Completed = false;
+            Pending = false;
         }
 
         // Checks task completion status and returns bootstrap panel coloring based on results
@@ -47,5 +47,6 @@ namespace MrFixIt.Models
                 return "panel-info";
             }
         }
+
     }
 }

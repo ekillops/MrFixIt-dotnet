@@ -29,51 +29,53 @@
 <hr />
 
 <h3>Your Jobs</h3>
-@foreach (var job in Model.Jobs)
-{
-    <div id="job-panel-@job.JobId">
-        <div class="panel @job.GetPanelClass()">
-            <div class="panel-heading">
-                <h3 class="panel-title">@job.Title</h3>
-            </div>
-            <div class="panel-body">
-                @job.Description
-                <hr />
-                <div class="completion">
-                    @if (job.Completed)
-                    {
-                        <span>Completed</span>
-                    }
-                    else
-                    {
-                    <form class="change-status">
-                        <input type="hidden" name="jobId" value="@job.JobId" />
-                        @if(@job.Pending)
+<div id="job-list">
+    @foreach (var job in Model.Jobs)
+    {
+        <div id="job-panel-@job.JobId">
+            <div class="panel @job.GetPanelClass()">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@job.Title</h3>
+                </div>
+                <div class="panel-body">
+                    @job.Description
+                    <hr />
+                    <div class="completion">
+                        @if (job.Completed)
                         {
-                            <span>Pending</span>
-                            <input type="hidden" name="changeValue" value="complete" />
-                            <input type="submit" class="submit-as-link" value="Mark as complete" />
+                            <span>Completed</span>
                         }
                         else
                         {
-                            <span>Inactive</span>
-                            <input type="hidden" name="changeValue" value="pending" />
-                            <input type="submit" class="submit-as-link" value="Mark as pending" />
+                        <form class="change-status">
+                            <input type="hidden" name="jobId" value="@job.JobId" />
+                            @if(@job.Pending)
+                            {
+                                <span>Pending</span>
+                                <input type="hidden" name="changeValue" value="complete" />
+                                <input type="submit" class="submit-as-link" value="Mark as complete" />
+                            }
+                            else
+                            {
+                                <span>Inactive</span>
+                                <input type="hidden" name="changeValue" value="pending" />
+                                <input type="submit" class="submit-as-link" value="Mark as pending" />
 
+                            }
+                        </form>
                         }
+                    </div>
+                    <form asp-controller="Jobs" asp-action="Delete" method="post">
+                        <input type="hidden" name="id" value="@job.JobId" />
+                        <input type="submit" class="submit-as-link" value="Delete" />
                     </form>
-                    }
                 </div>
-                <form asp-controller="Jobs" asp-action="Delete" method="post">
-                    <input type="hidden" name="id" value="@job.JobId" />
-                    <input type="submit" class="submit-as-link" value="Delete" />
-                </form>
             </div>
         </div>
-    </div>
-}
+    }
+</div>
 
-@if (Model.Avaliable)
+@if (Model.Available)
 {
     <p>Please <a asp-controller="Jobs" asp-action="Index">select a job</a></p>
 }

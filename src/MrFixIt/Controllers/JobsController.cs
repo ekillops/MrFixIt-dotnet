@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MrFixIt.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace MrFixIt.Controllers
 {
@@ -47,7 +48,14 @@ namespace MrFixIt.Controllers
         public IActionResult ClaimJob(int jobId)
         {
             Job job = db.Jobs.Include(j => j.Worker).FirstOrDefault(j => j.JobId == jobId);
-            job.Worker = db.Workers.FirstOrDefault(i => i.UserName == User.Identity.Name);
+            Worker applyingWorker = db.Workers.FirstOrDefault(i => i.UserName == User.Identity.Name);
+
+            if (applyingWorker.Available)
+            {
+                applyingWorker.Available = false;
+                job.Worker = applyingWorker;
+            }
+
             db.Entry(job).State = EntityState.Modified;
             db.SaveChanges();
             return Json(job);
@@ -56,24 +64,57 @@ namespace MrFixIt.Controllers
         [HttpPost]
         public IActionResult ChangeStatus(int jobId, string changeValue)
         {
-            Job job = db.Jobs.FirstOrDefault(j => j.JobId == jobId);
+            List<Job> workerJobs = db.Jobs.Include(j => j.Worker).Where(j => j.JobId == jobId).ToList();
 
-            switch (changeValue)
+            if(changeValue == "pending")
             {
-                case "pending":
-                    job.MarkPending();
-                    break;
-                case "complete":
-                    job.MarkCompleted();
-                    break;
-                default:
-                    break;
+                foreach(Job job in workerJobs)
+                {
+                    if(job.JobId == jobId && job.Completed == false)
+                    {
+                        job.MarkPending();
+                        job.Worker.Available = false;
+                        db.Entry(job).State = EntityState.Modified;
+                        db.Entry(job.Worker).State = EntityState.Modified;
+                    }
+                    else if (job.Completed == false)
+                    {
+                        job.MarkInactive();
+                        db.Entry(job).State = EntityState.Modified;
+                    }
+                }
+            }
+            else if (changeValue == "complete")
+            {
+                foreach (Job job in workerJobs)
+                {
+                    if (job.JobId == jobId)
+                    {
+                        job.MarkCompleted();
+                        job.Worker.Available = true;
+                        db.Entry(job).State = EntityState.Modified;
+                        db.Entry(job.Worker).State = EntityState.Modified;
+                    }
+                }
             }
 
-            db.Entry(job).State = EntityState.Modified;
+            //switch (changeValue)
+            //{
+            //    case "pending":
+            //        job.Worker.ActiveJob = job;
+            //        job.MarkPending();
+            //        break;
+            //    case "complete":
+            //        job.Worker.ActiveJob = null;
+            //        job.MarkCompleted();
+            //        break;
+            //    default:
+            //        break;
+            //}
+
             db.SaveChangesAsync();
 
-            return View(job);
+            return View(workerJobs);
         }
     }
 }
