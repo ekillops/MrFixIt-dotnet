@@ -28,8 +28,13 @@
                     <li><a asp-controller="Jobs" asp-action="Create">Hire Us</a></li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a asp-controller="Workers" asp-action="Index">Worker Dashboard</a></li>
+                        <li><a asp-controller="Workers" asp-action="Index">Profile</a></li>
                         <li><a asp-controller="Account" asp-action="Logout">Log Out</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-controller="Account" asp-action="Login">Log In</a></li>
+                        <li><a asp-controller="Account" asp-action="Register">Register</a></li>
                     }
                 </ul>
             </div>
