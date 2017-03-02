@@ -15,11 +15,24 @@
                 data: $(this).serialize(),
                 datatype: 'html',
                 success: function (result) {
-                    $("#job-panel-" + jobId).html(result);
+                    $("#job-list").html(result);
                 }
             });
         });
 
+        $(".delete").submit(function (event) {
+            event.preventDefault();
+            debugger
+            var jobId = $("> input[name=jobId]", this).val();
+            $.ajax({
+                type: 'POST',
+                url: '/Jobs/Delete/',
+                data: { jobId: parseInt(jobId) },
+                success: function () {
+                    $("#job-panel-" + jobId).remove();
+                }
+            });
+        });
     });
 </script>
 
@@ -65,8 +78,8 @@
                         </form>
                         }
                     </div>
-                    <form asp-controller="Jobs" asp-action="Delete" method="post">
-                        <input type="hidden" name="id" value="@job.JobId" />
+                    <form class="delete">
+                        <input type="hidden" name="jobId" value="@job.JobId" />
                         <input type="submit" class="submit-as-link" value="Delete" />
                     </form>
                 </div>

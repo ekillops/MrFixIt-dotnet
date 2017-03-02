@@ -29,12 +29,11 @@ namespace MrFixIt.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public void Delete(int jobId)
         {
-            Job job = db.Jobs.FirstOrDefault(j => j.JobId == id);
+            Job job = db.Jobs.FirstOrDefault(j => j.JobId == jobId);
             db.Remove(job);
             db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         public IActionResult Claim(int id)
@@ -97,20 +96,6 @@ namespace MrFixIt.Controllers
                     }
                 }
             }
-
-            //switch (changeValue)
-            //{
-            //    case "pending":
-            //        job.Worker.ActiveJob = job;
-            //        job.MarkPending();
-            //        break;
-            //    case "complete":
-            //        job.Worker.ActiveJob = null;
-            //        job.MarkCompleted();
-            //        break;
-            //    default:
-            //        break;
-            //}
 
             db.SaveChangesAsync();
 

@@ -1,0 +1,83 @@
+﻿@{
+    Layout = null;
+}
+
+@model List<MrFixIt.Models.Job>
+
+<!-- Script for changing job completion status -->
+<script>
+    $(function () {
+        $(".change-status").submit(function (event) {
+            event.preventDefault();
+            var jobId = $("> input[name=jobId]", this).val();
+            $.ajax({
+                type: 'POST',
+                url: '/Jobs/ChangeStatus/',
+                data: $(this).serialize(),
+                datatype: 'html',
+                success: function (result) {
+                    $("#job-list").html(result);
+                }
+            });
+        });
+    });
+
+    $(".delete").submit(function (event) {
+        event.preventDefault();
+        debugger
+        var jobId = $("> input[name=jobId]", this).val();
+        $.ajax({
+            type: 'POST',
+            url: '/Jobs/Delete/',
+            data: { jobId: parseInt(jobId) },
+            success: function () {
+                $("#job-panel-" + jobId).remove();
+            }
+        });
+    });
+</script>
+
+<!-- Html Partial-->
+@foreach (var job in Model)
+{
+    <div id="job-panel-@job.JobId">
+        <div class="panel @job.GetPanelClass()">
+            <div class="panel-heading">
+                <h3 class="panel-title">@job.Title</h3>
+            </div>
+            <div class="panel-body">
+                @job.Description
+                <hr />
+                <div class="completion">
+                    @if (job.Completed)
+                    {
+                        <span>Completed</span>
+                    }
+                    else
+                    {
+                        <form class="change-status">
+                            <input type="hidden" name="jobId" value="@job.JobId" />
+                            @if (@job.Pending)
+                            {
+                                <span>Pending</span>
+                                <input type="hidden" name="changeValue" value="complete" />
+                                <input type="submit" class="submit-as-link" value="Mark as complete" />
+                            }
+                            else
+                            {
+                                <span>Inactive</span>
+                                <input type="hidden" name="changeValue" value="pending" />
+                                <input type="submit" class="submit-as-link" value="Mark as pending" />
+
+                            }
+                        </form>
+                    }
+                </div>
+                <form class="delete">
+                    <input type="hidden" name="jobId" value="@job.JobId" />
+                    <input type="submit" class="submit-as-link" value="Delete" />
+                </form>
+            </div>
+        </div>
+    </div>
+}

@@ -23,6 +23,19 @@
                 alert("You already have an active job!");    
             });
         });
+
+        $(".delete").submit(function (event) {
+            event.preventDefault();
+            var jobId = $("> input[name=jobId]", this).val();
+            $.ajax({
+                type: 'POST',
+                url: '/Jobs/Delete/',
+                data: { jobId: parseInt(jobId) },
+                success: function () {
+                    $("#job-panel-" + jobId).remove();
+                }
+            });
+        });
     });
 </script>
 
@@ -91,10 +104,10 @@
                     }
                     else
                     {
-                        <p>This job is claimed by @job.Worker.FirstName @job.Worker.LastName</p>
+                        <p>Completed by @job.Worker.FirstName @job.Worker.LastName</p>
                     }
                 </div>
-                <form asp-controller="Jobs" asp-action="Delete" method="post">
+                <form class="delete">
                     <input type="hidden" name="id" value="@job.JobId" />
                     <input type="submit" class="submit-as-link" value="Delete" />
                 </form>
